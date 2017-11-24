@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>菜单组件</title>
+    <script src="vue.js"></script>
+    <style>
+         *{
+             list-style: none;
+         }
+        .menu{
+            float: left;
+        }
+    </style>
+</head>
+<body>
+<div class="menu" style="background: green">
+    <custom-menu v-for="item in arr" v-bind:todo="item" v-bind:key="item.title">
+    </custom-menu>
+</div>
+</body>
+</html>
+<script>
+    Vue.component("custom-menu",{
+        props:[
+            "todo",
+        ],
+        template:"<ul><h3 @click='shows(todo)'>{{todo.title}}</h3><transition name='fade' v-for='items in todo.con'><li v-if='todo.show'>{{items}}</li></transition></ul>",
+        methods:{
+            shows(item){
+                item.show=!item.show;
+            }
+        }
+    })
+    new Vue({
+        el:".menu",
+        data:{
+            arr:[
+                {"title":"一级","con":{"1":"下拉1","2":"下拉2"},"show": true},
+                {"title":"二级","con":{"1":"下拉1","2":"下拉2"},"show": true},
+                {"title":"三级","con":{"1":"下拉1","2":"下拉2"},"show": true}
+            ],
+        }
+    })
+
+</script>
